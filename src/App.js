@@ -1,23 +1,50 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Dashboard from './components/Dashboard';
+import Bills from './components/Bills';
+import Payments from './components/Payments';
 import './App.css';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <Dashboard />;
+      case 'bills':
+        return <Bills />;
+      case 'payments':
+        return <Payments />;
+      default:
+        return <Dashboard />;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className="app">
+      <nav className="nav">
+        <button 
+          className={activeTab === 'dashboard' ? 'active' : ''} 
+          onClick={() => setActiveTab('dashboard')}
         >
-          Learn React
-        </a>
-      </header>
+          Dashboard
+        </button>
+        <button 
+          className={activeTab === 'bills' ? 'active' : ''} 
+          onClick={() => setActiveTab('bills')}
+        >
+          Bills
+        </button>
+        <button 
+          className={activeTab === 'payments' ? 'active' : ''} 
+          onClick={() => setActiveTab('payments')}
+        >
+          Payments
+        </button>
+      </nav>
+      <main className="content">
+        {renderContent()}
+      </main>
     </div>
   );
 }
